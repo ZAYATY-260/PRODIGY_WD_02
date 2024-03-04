@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Watch</title>
+      <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<>
+    
+
+
+  <div class="container-fluid">
+    <div class="row d-flex justify-content-center mt-5">
+      <div class="col-lg-12 mx-auto container">
+            
+            <div class=" stop-watch-card p-5 shadow d-flex justify-content-center align-items-center" >
+                <div class="text-center">
+                    <h2 class="text-dark display-4"><span id="minutes">00</span>:<span id="seconds">00</span>:<span id="tens">00</span></h2>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="buttons d-flex justify-content-center">
+        <button id="start" class="btn btn-outline-dark  mx-2">Start</button>
+        <button id="pause" class="btn btn-outline-dark  mx-2">Pause</button>
+        <button id="reset" class="btn btn-outline-dark  mx-2">Reset</button>
+        <button id="lap" class="btn btn-outline-dark  mx-2">lap</button>
+    </div>
+    <div class="container-fluid text-center mt-5  p-5" id="laps">
+
+    </div>
+
+
+      <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+</body>
+    <script>
+        window.onload = function(){
+            let minutes = 0;
+            let seconds = 0;
+            let tens = 0;
+            let laps_counter = 0;
+
+            let last_minutes = 0;
+            let last_seconds = 0;
+            let last_tens = 0;
+
+            let appendMinutes = document.getElementById('minutes');
+            let appendSeconds = document.getElementById('seconds');
+            let appendTens = document.getElementById('tens');
+            let paused = 0;
+
+
+            let start = document.getElementById('start');
+            let pause = document.getElementById('pause');
+            let reset = document.getElementById('reset');
+            let lap = document.getElementById('lap');
+
+            let interval;
+            let interval2;
+
+            lap.onclick = function(){
+                start_lap();
+
+            }
+
+            start.onclick = function(){
+                paused = 0;
+                interval = setInterval(startTimer, 10);
+                interval2 = setInterval(startLaps, 10);
+            }
+            pause.onclick = function(){
+                clearInterval(interval);
+                clearInterval(interval2);
+                paused = 1 ;
+            }
+            reset.onclick = function(){
+                clearInterval(interval);
+                clearInterval(interval2);
+                last_minutes = 0 ;
+                last_seconds = 0 ;
+                last_tens = 0 ;
+                paused = 1 ;
+                laps_counter = 0;
+                tens = '00';
+                seconds = '00';
+                minutes = '00';
+                appendTens.innerHTML = tens;
+                appendSeconds.innerHTML = seconds;
+                appendMinutes.innerHTML = minutes;
+                document.getElementById("laps").innerHTML = '';
+            }
+
+            function start_lap()
+            {
+
+                if( paused != 1)
+                {
+                if(seconds > 0 || minutes > 0 || tens > 0 )
+                {
+                    
+                    laps_counter++;
+
+                    if(laps_counter == 1)
+                    {
+                        document.getElementById("laps").innerHTML += "<li class='list-group-item text-black mb-3 text-center'> laps </li>";
+                        document.getElementById("laps").innerHTML += "<li class='list-group-item text-black mb-3'> <span class='text-primary fw-bold me-5'> lap  " + laps_counter +"</span> "+ last_minutes + " : " + last_seconds + " : " +  last_tens  + "</li>";
+                        console.log(tens + " : " + seconds + " : " + minutes);
+                    }
+                    else
+                    {   
+                            document.getElementById("laps").innerHTML += "<li class='list-group-item text-black text-black mb-3'> <span class='text-primary fw-bold me-5'> lap  " + laps_counter +"</span> " + last_minutes + " : " + last_seconds + " : " +  last_tens  + "</li>";
+                            last_minutes = 0;
+                            last_seconds = 0;
+                            last_tens = 0;
+                    }
+                }
+            }
+            }
+
+            function startTimer(){
+                tens++;
+                if(tens <= 9){
+                    appendTens.innerHTML = '0' + tens;
+                }
+                if(tens > 9){
+                    appendTens.innerHTML = tens;
+                }
+                if(tens > 99){
+                    seconds++;
+                    appendSeconds.innerHTML = '0' + seconds;
+                    tens = 0;
+                    appendTens.innerHTML = '0' + 0;
+                }
+                if(seconds > 9){
+                    appendSeconds.innerHTML = seconds;
+                }
+                if(seconds > 59){
+                    minutes++;
+                    appendMinutes.innerHTML = '0' + minutes;
+                    seconds = 0;
+                    appendSeconds.innerHTML = '0' + 0;
+                }
+            }
+                function startLaps()
+                {
+                last_tens++;
+                if(last_tens > 99){
+                    last_seconds++;
+                    last_tens = 0;
+                }
+                if(last_seconds > 59){
+                    last_minutes++;
+                    last_seconds = 0;
+                }
+            }
+
+            
+        }
+    </script>
+</html>

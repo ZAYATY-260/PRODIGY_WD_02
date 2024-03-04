@@ -1,0 +1,58 @@
+:root {
+  --font-default: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-primary: "Inter", sans-serif;
+  --font-secondary: "Cardo", sans-serif;
+}
+
+/* Colors */
+:root {
+  --color-default: #fafafa;
+  --color-primary: #27a776;
+  --color-secondary: #161718;
+}
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-default);
+  color: var(--color-default);
+
+}
+
+@keyframes rotate {
+  from {background-color: red;}
+  to {background-color: yellow;}
+}
+
+.container {
+  background-image: url('../../m.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* Adjusted to cover the entire pseudo-element */
+  content: "";
+  height: 500px; /* Adjusted to a size that covers the circular card */
+  width: 500px; /* Adjusted to a size that covers the circular card */
+}
+
+
+
+.stop-watch-card {
+  height: 300px;
+  width: 300px;
+  margin: 100px auto;
+  border-radius: 50%; /* Adjusted to make the card circular */
+  overflow: hidden; /* Hide any content that overflows the circular card */
+}
+
+#laps{
+  overflow: auto;
+  width: 300px;
+  height: 300px;
+}
